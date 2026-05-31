@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nguyendow Images — Cinematic Photography · California</title>
+<meta name="description" content="Cinematic portrait, wedding, and family photography based in California. Frames worth keeping." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* ---- HERO ---- */
+  .hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); animation: heroPan 22s ease-in-out infinite alternate; }
+  @keyframes heroPan { from { transform: scale(1.04) translate3d(0,0,0); } to { transform: scale(1.12) translate3d(-2%, -1.5%, 0); } }
+  @media (prefers-reduced-motion: reduce){ .hero-bg img { animation: none; } }
+  .hero-bg::after { content:""; position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(11,11,12,0.55) 0%, rgba(11,11,12,0.15) 35%, rgba(11,11,12,0.35) 70%, rgba(11,11,12,0.95) 100%); }
+  .hero-inner { position: relative; z-index: 2; width: 100%; max-width: var(--max); margin-inline: auto; padding: 120px var(--sp-6) var(--sp-9); }
+  .hero h1 { font-size: var(--fs-hero); font-weight: 800; line-height: 0.9; letter-spacing: -0.035em; max-width: 14ch; margin: var(--sp-5) 0 var(--sp-5); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lead { max-width: 46ch; color: var(--text); }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-7); }
+  .scroll-cue { position: absolute; right: var(--sp-6); bottom: var(--sp-7); z-index: 2; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-2); writing-mode: vertical-rl; display: flex; align-items: center; gap: var(--sp-3); }
+  .scroll-cue::after { content:""; display:block; width: 1px; height: 56px; background: linear-gradient(var(--accent), transparent); }
+  @media (max-width: 880px){ .scroll-cue { display: none; } }
+
+  /* ---- statement ---- */
+  .statement { display: grid; grid-template-columns: 1fr 1.6fr; gap: var(--sp-8); align-items: start; }
+  .statement .big { font-family: var(--display); font-weight: 700; font-size: clamp(1.7rem, 3.2vw, 2.7rem); line-height: 1.18; letter-spacing: -0.02em; color: var(--text); text-wrap: balance; }
+  .statement .big mark { background: linear-gradient(transparent 60%, rgba(194,163,122,0.28) 60%); color: inherit; }
+  @media (max-width: 880px){ .statement { grid-template-columns: 1fr; gap: var(--sp-5); } }
+
+  /* ---- selected work ---- */
+  .work-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--sp-5); margin-bottom: var(--sp-7); }
+  .work-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-4); }
+  .work-grid .frame { border-radius: 2px; }
+  .w-a { grid-column: span 7; aspect-ratio: 3/2; }
+  .w-b { grid-column: span 5; aspect-ratio: 4/5; }
+  .w-c { grid-column: span 5; aspect-ratio: 4/5; }
+  .w-d { grid-column: span 7; aspect-ratio: 3/2; }
+  .w-cap { position: absolute; left: var(--sp-4); bottom: var(--sp-4); z-index: 3; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.18em; text-transform: uppercase; color: var(--text); opacity: 0; transform: translateY(8px); transition: opacity .4s var(--ease), transform .4s var(--ease); }
+  .frame:hover .w-cap { opacity: 1; transform: none; }
+  @media (max-width: 720px){ .w-a, .w-b, .w-c, .w-d { grid-column: span 12; } }
+
+  /* ---- services ---- */
+  .services { border-top: 1px solid var(--line-2); }
+  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .svc { padding: var(--sp-7) var(--sp-6); border-left: 1px solid var(--line-2); transition: background .5s var(--ease); }
+  .svc:first-child { border-left: 0; }
+  .svc:hover { background: var(--bg-1); }
+  .svc .num { font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.2em; color: var(--accent); }
+  .svc h3 { font-size: var(--fs-xl); margin: var(--sp-4) 0 var(--sp-3); }
+  .svc p { font-size: var(--fs-sm); margin: 0; }
+  @media (max-width: 880px){ .svc-grid { grid-template-columns: 1fr; } .svc { border-left: 0; border-top: 1px solid var(--line-2); } .svc:first-child { border-top: 0; } }
+
+  /* ---- about teaser ---- */
+  .about-teaser { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); align-items: center; }
+  .about-teaser .frame { aspect-ratio: 4/5; border-radius: 2px; }
+  @media (max-width: 880px){ .about-teaser { grid-template-columns: 1fr; gap: var(--sp-6); } }
+
+  /* ---- CTA band ---- */
+  .cta-band { text-align: center; border-top: 1px solid var(--line-2); }
+  .cta-band h2 { font-size: var(--fs-3xl); font-weight: 800; letter-spacing: -0.03em; line-height: 0.98; margin-bottom: var(--sp-5); }
+  .cta-band p { max-width: 48ch; margin-inline: auto; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="brand" href="index.html">Nguyendow<span class="mark">Images</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="gallery.html">Portfolio</a>
+    <a href="packages.html">Packages</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">Book a session</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" data-screen-label="Landing — Hero">
+  <div class="hero-bg"><img src="images/hero.jpg" alt="" /></div>
+  <div class="hero-inner">
+    <span class="eyebrow">Portraits · Weddings · Families — California</span>
+    <h1 class="display">Frames worth <em>keeping.</em></h1>
+    <p class="lead">Cinematic, unhurried photography for the people and moments that matter. Natural light, real feeling, nothing overstaged.</p>
+    <div class="hero-cta">
+      <a href="gallery.html" class="btn">View the work <span class="arr">→</span></a>
+      <a href="contact.html" class="btn ghost">Book a session</a>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</header>
+
+<!-- STATEMENT -->
+<section class="section">
+  <div class="wrap statement reveal">
+    <span class="eyebrow">The approach</span>
+    <p class="big">I shoot the in-between moments — the laugh before the pose, the quiet glance, the light just before it goes. The result is <mark>honest, cinematic imagery</mark> you'll still love decades from now.</p>
+  </div>
+</section>
+
+<!-- SELECTED WORK -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="work-head reveal">
+      <div>
+        <span class="eyebrow">Selected work</span>
+        <h2 class="section-title" style="margin-top:var(--sp-4);">A few favorites</h2>
+      </div>
+      <a href="gallery.html" class="btn ghost">Full portfolio <span class="arr">→</span></a>
+    </div>
+    <div class="work-grid reveal">
+      <a href="gallery.html" class="frame w-a zoom"><img src="images/g2.jpg" alt="Wedding photograph" /><span class="w-cap">Wedding · Sonoma</span></a>
+      <a href="gallery.html" class="frame w-b zoom"><img src="images/g1.jpg" alt="Portrait photograph" /><span class="w-cap">Portrait · Studio</span></a>
+      <a href="gallery.html" class="frame w-c zoom"><img src="images/g4.jpg" alt="Couple photograph" /><span class="w-cap">Couple · Big Sur</span></a>
+      <a href="gallery.html" class="frame w-d zoom"><img src="images/g8.jpg" alt="Wedding photograph" /><span class="w-cap">Wedding · Napa</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="wrap" style="padding-block: var(--sp-8) 0;">
+    <span class="eyebrow reveal">What I shoot</span>
+  </div>
+  <div class="wrap svc-grid reveal" style="margin-top: var(--sp-6);">
+    <div class="svc">
+      <span class="num">01</span>
+      <h3>Portraits &amp; Headshots</h3>
+      <p>Personal, professional, and creative portraits made to look like you on your best day.</p>
+    </div>
+    <div class="svc">
+      <span class="num">02</span>
+      <h3>Weddings</h3>
+      <p>Full-day, documentary-leaning coverage that keeps the day's real energy intact.</p>
+    </div>
+    <div class="svc">
+      <span class="num">03</span>
+      <h3>Families &amp; Couples</h3>
+      <p>Relaxed sessions on location — golden hour, the coast, your favorite place.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT TEASER -->
+<section class="section">
+  <div class="wrap about-teaser">
+    <div class="frame zoom reveal"><img src="images/about.jpg" alt="The photographer" /></div>
+    <div class="reveal">
+      <span class="eyebrow">Behind the lens</span>
+      <h2 class="section-title" style="margin: var(--sp-4) 0 var(--sp-5);">Hi, I'm the photographer behind Nguyendow Images.</h2>
+      <p class="lead">California-based, camera-in-hand for over a decade. I care less about perfect poses and more about how a photograph feels when you find it years later.</p>
+      <a href="about.html" class="btn ghost" style="margin-top: var(--sp-4);">More about me <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="section cta-band">
+  <div class="wrap reveal">
+    <span class="eyebrow no-rule" style="justify-content:center;">Let's make something</span>
+    <h2 style="margin-top: var(--sp-5);">Booking sessions across California.</h2>
+    <p class="lead">Tell me about your shoot — a session, a date, the people involved — and I'll get back to you within two days.</p>
+    <a href="contact.html" class="btn" style="margin-top: var(--sp-6);">Start a booking <span class="arr">→</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand display">Nguyendow Images</div>
+        <p class="muted" style="max-width: 32ch; margin-top: var(--sp-3);">Cinematic portrait, wedding &amp; family photography. Based in California, available to travel.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <div class="footer-links">
+          <a href="gallery.html">Portfolio</a>
+          <a href="packages.html">Packages</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <div class="footer-links">
+          <a href="mailto:hello@nguyendowimages.com">hello@nguyendowimages.com</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          <a href="contact.html">Book a session</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Nguyendow Images</span>
+      <span>California, USA</span>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio — Nguyendow Images</title>
+<meta name="description" content="A portfolio of cinematic portrait, wedding, and family photography by Nguyendow Images." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .page-head { padding-top: calc(var(--sp-10) + 40px); }
+  .page-head h1 { font-size: var(--fs-3xl); font-weight: 800; letter-spacing: -0.03em; line-height: 0.96; margin: var(--sp-4) 0 var(--sp-4); }
+  .page-head p { max-width: 52ch; }
+
+  /* filters */
+  .filters { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-6); }
+  .filter {
+    font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-2); background: transparent; border: 1px solid var(--line);
+    padding: 10px 18px; border-radius: 999px; cursor: pointer;
+    transition: color .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+  }
+  .filter:hover { color: var(--text); border-color: var(--text-2); }
+  .filter.active { color: #0B0B0C; background: var(--accent); border-color: var(--accent); }
+
+  /* masonry */
+  .masonry { columns: 3; column-gap: var(--sp-4); margin-top: var(--sp-7); }
+  @media (max-width: 980px){ .masonry { columns: 2; } }
+  @media (max-width: 560px){ .masonry { columns: 1; } }
+  .tile {
+    position: relative; break-inside: avoid; margin-bottom: var(--sp-4);
+    overflow: hidden; cursor: pointer; border-radius: 2px; background: var(--bg-2);
+    opacity: 1; transition: opacity .45s var(--ease), transform .45s var(--ease);
+  }
+  .tile.hide { display: none; }
+  .tile img { width: 100%; height: auto; display: block; transition: transform 1s var(--ease), filter .6s var(--ease); }
+  .tile::after { content:""; position:absolute; inset:0; background: linear-gradient(0deg, rgba(11,11,12,0.55), transparent 45%); opacity: 0; transition: opacity .4s var(--ease); }
+  .tile:hover img { transform: scale(1.05); }
+  .tile:hover::after { opacity: 1; }
+  .tile .meta {
+    position: absolute; left: var(--sp-4); bottom: var(--sp-4); z-index: 2;
+    font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text); opacity: 0; transform: translateY(8px); transition: opacity .4s var(--ease), transform .4s var(--ease);
+  }
+  .tile:hover .meta { opacity: 1; transform: none; }
+
+  /* lightbox */
+  .lb { position: fixed; inset: 0; z-index: 200; background: rgba(8,8,9,0.96); display: none; align-items: center; justify-content: center; }
+  .lb.open { display: flex; }
+  .lb img { max-width: 88vw; max-height: 82vh; object-fit: contain; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+  .lb-cap { position: absolute; bottom: var(--sp-6); left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-2); }
+  .lb-btn { position: absolute; background: none; border: 1px solid var(--line); color: var(--text); width: 52px; height: 52px; border-radius: 999px; cursor: pointer; font-size: 20px; display: grid; place-items: center; transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease); }
+  .lb-btn:hover { background: var(--accent); color: #0B0B0C; border-color: var(--accent); }
+  .lb-close { top: var(--sp-5); right: var(--sp-5); }
+  .lb-prev { left: var(--sp-5); top: 50%; transform: translateY(-50%); }
+  .lb-next { right: var(--sp-5); top: 50%; transform: translateY(-50%); }
+  @media (max-width: 560px){ .lb-prev, .lb-next { top: auto; bottom: var(--sp-8); transform: none; } .lb-prev { left: var(--sp-5);} .lb-next{ right: var(--sp-5);} }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">Nguyendow<span class="mark">Images</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="gallery.html" aria-current="page">Portfolio</a>
+    <a href="packages.html">Packages</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">Book a session</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<main data-screen-label="Portfolio">
+  <section class="wrap page-head">
+    <span class="eyebrow">Portfolio</span>
+    <h1 class="display">Selected work</h1>
+    <p class="lead muted">A living archive of recent sessions — portraits, weddings, families, and the people in between. Tap any frame to view it full size.</p>
+    <div class="filters" id="filters">
+      <button class="filter active" data-cat="all">All</button>
+      <button class="filter" data-cat="portrait">Portraits</button>
+      <button class="filter" data-cat="wedding">Weddings</button>
+      <button class="filter" data-cat="family">Families &amp; Couples</button>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="masonry" id="masonry">
+      <!-- tiles injected by JS for clean filtering + lightbox indexing -->
+    </div>
+  </section>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" aria-hidden="true">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <img id="lbImg" src="" alt="" />
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next">›</button>
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand display">Nguyendow Images</div>
+        <p class="muted" style="max-width: 32ch; margin-top: var(--sp-3);">Cinematic portrait, wedding &amp; family photography. Based in California, available to travel.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <div class="footer-links">
+          <a href="gallery.html">Portfolio</a>
+          <a href="packages.html">Packages</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <div class="footer-links">
+          <a href="mailto:hello@nguyendowimages.com">hello@nguyendowimages.com</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          <a href="contact.html">Book a session</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Nguyendow Images</span>
+      <span>California, USA</span>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+  // Portfolio data — swap src + caption as real photos come in
+  var PHOTOS = [
+    { src: 'images/g1.jpg',  cat: 'portrait', cap: 'Portrait · Studio' },
+    { src: 'images/g2.jpg',  cat: 'wedding',  cap: 'Wedding · Sonoma' },
+    { src: 'images/g4.jpg',  cat: 'family',   cap: 'Couple · Big Sur' },
+    { src: 'images/g5.jpg',  cat: 'portrait', cap: 'Portrait · Oakland' },
+    { src: 'images/g3.jpg',  cat: 'family',   cap: 'Family · Marin' },
+    { src: 'images/g6.jpg',  cat: 'wedding',  cap: 'Wedding · Carmel' },
+    { src: 'images/g9.jpg',  cat: 'family',   cap: 'Family · Santa Cruz' },
+    { src: 'images/g8.jpg',  cat: 'wedding',  cap: 'Wedding · Napa' },
+    { src: 'images/g7.jpg',  cat: 'portrait', cap: 'Portrait · Golden Hour' },
+    { src: 'images/g10.jpg', cat: 'family',   cap: 'Couple · Mendocino' },
+    { src: 'images/g11.jpg', cat: 'portrait', cap: 'Portrait · Editorial' },
+    { src: 'images/g12.jpg', cat: 'wedding',  cap: 'Wedding · Tahoe' }
+  ];
+
+  var masonry = document.getElementById('masonry');
+  PHOTOS.forEach(function (p, i) {
+    var t = document.createElement('div');
+    t.className = 'tile';
+    t.dataset.cat = p.cat;
+    t.dataset.index = i;
+    t.innerHTML = '<img src="' + p.src + '" alt="' + p.cap + '" loading="lazy" />' +
+                  '<span class="meta">' + p.cap + '</span>';
+    masonry.appendChild(t);
+  });
+
+  // Filtering
+  var current = 'all';
+  document.getElementById('filters').addEventListener('click', function (e) {
+    var b = e.target.closest('.filter');
+    if (!b) return;
+    document.querySelectorAll('.filter').forEach(function (f) { f.classList.remove('active'); });
+    b.classList.add('active');
+    current = b.dataset.cat;
+    document.querySelectorAll('.tile').forEach(function (t) {
+      t.classList.toggle('hide', !(current === 'all' || t.dataset.cat === current));
+    });
+  });
+
+  // Lightbox
+  var lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
+  var order = [];
+  function visibleOrder() {
+    order = PHOTOS.map(function (p, i) { return i; })
+      .filter(function (i) { return current === 'all' || PHOTOS[i].cat === current; });
+  }
+  var pos = 0;
+  function show(idx) {
+    var p = PHOTOS[idx];
+    lbImg.src = p.src; lbImg.alt = p.cap; lbCap.textContent = p.cap;
+  }
+  function open(realIndex) {
+    visibleOrder();
+    pos = order.indexOf(realIndex);
+    show(realIndex);
+    lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+  function step(d) { pos = (pos + d + order.length) % order.length; show(order[pos]); }
+
+  masonry.addEventListener('click', function (e) {
+    var t = e.target.closest('.tile');
+    if (!t) return;
+    open(parseInt(t.dataset.index, 10));
+  });
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.getElementById('lbPrev').addEventListener('click', function (e) { e.stopPropagation(); step(-1); });
+  document.getElementById('lbNext').addEventListener('click', function (e) { e.stopPropagation(); step(1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+</script>
+</body>
+</html>

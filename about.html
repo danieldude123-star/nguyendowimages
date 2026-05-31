@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Nguyendow Images</title>
+<meta name="description" content="About Nguyendow Images — a California-based photographer making cinematic portraits, weddings, and family photography." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .page-head { padding-top: calc(var(--sp-10) + 40px); }
+  .intro { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--sp-8); align-items: center; }
+  .intro .frame { aspect-ratio: 4/5; border-radius: 3px; }
+  .intro h1 { font-size: var(--fs-3xl); font-weight: 800; letter-spacing: -0.03em; line-height: 0.96; margin: var(--sp-4) 0 var(--sp-5); }
+  @media (max-width: 880px){ .intro { grid-template-columns: 1fr; gap: var(--sp-6); } }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-block: 1px solid var(--line-2); }
+  .stat { padding: var(--sp-7) var(--sp-5); border-left: 1px solid var(--line-2); text-align: center; }
+  .stat:first-child { border-left: 0; }
+  .stat .n { font-family: var(--display); font-weight: 800; font-size: var(--fs-2xl); letter-spacing: -0.02em; line-height: 1; }
+  .stat .l { font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-2); margin-top: var(--sp-3); }
+  @media (max-width: 720px){ .stats { grid-template-columns: 1fr; } .stat { border-left: 0; border-top: 1px solid var(--line-2); } .stat:first-child { border-top: 0; } }
+
+  .prose { max-width: var(--max-read); }
+  .prose p { font-size: var(--fs-md); line-height: 1.7; color: var(--text-1); margin-bottom: var(--sp-5); }
+  .prose p:first-of-type::first-letter { font-family: var(--display); font-weight: 800; font-size: 3.4em; line-height: 0.8; float: left; padding: 6px 14px 0 0; color: var(--accent); }
+  .sig { font-family: var(--display); font-weight: 700; font-size: var(--fs-xl); color: var(--text); margin-top: var(--sp-6); }
+  .sig small { display: block; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-2); margin-top: var(--sp-2); }
+
+  .values { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-6); margin-top: var(--sp-7); }
+  .value .v-num { font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.2em; color: var(--accent); }
+  .value h3 { font-size: var(--fs-lg); margin: var(--sp-3) 0 var(--sp-2); }
+  .value p { font-size: var(--fs-sm); color: var(--text-2); margin: 0; }
+  @media (max-width: 720px){ .values { grid-template-columns: 1fr; gap: var(--sp-5); } }
+
+  .gear { font-family: var(--mono); font-size: var(--fs-sm); color: var(--text-2); display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-5); }
+  .gear span { color: var(--text-1); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">Nguyendow<span class="mark">Images</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="gallery.html">Portfolio</a>
+    <a href="packages.html">Packages</a>
+    <a href="about.html" aria-current="page">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">Book a session</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<main data-screen-label="About">
+  <section class="wrap page-head">
+    <div class="intro">
+      <div class="frame zoom reveal"><img src="images/about.jpg" alt="The photographer behind Nguyendow Images" /></div>
+      <div class="reveal">
+        <span class="eyebrow">About</span>
+        <h1 class="display">A photographer who'd rather you forget the camera's there.</h1>
+        <p class="lead muted">Based in California — making cinematic portraits, weddings, and family photographs since 2013.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom: var(--sp-9);">
+    <div class="stats reveal">
+      <div class="stat"><div class="n">12+</div><div class="l">Years shooting</div></div>
+      <div class="stat"><div class="n">500+</div><div class="l">Sessions &amp; weddings</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Of California, will travel</div></div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom: var(--sp-9);">
+    <div class="prose reveal">
+      <p>I grew up in the Bay Area with a hand-me-down film camera and a habit of pointing it at everyone I loved. Three decades later, not much has changed — I still think the best photographs are the ones where nobody's really thinking about being photographed.</p>
+      <p>My work leans cinematic and unhurried. I chase natural light, lean into shadow, and wait for the real moment instead of forcing the perfect one. Whether it's a quick headshot, a family on the coast at golden hour, or a full wedding day, my job is the same: pay close attention, stay out of the way, and hand you back something that still feels like that day years from now.</p>
+      <p>When I'm not behind a camera, I'm usually scouting back roads up Highway 1, over-ordering coffee, or printing photos far too large for the wall they're going on. If any of that sounds like your kind of thing, I'd love to make some pictures with you.</p>
+      <div class="sig">— Nguyendow Images<small>Photographer · California</small></div>
+    </div>
+  </section>
+
+  <section class="section" style="border-top: 1px solid var(--line-2); padding-top: var(--sp-8);">
+    <div class="wrap">
+      <span class="eyebrow reveal">How I work</span>
+      <div class="values reveal">
+        <div class="value">
+          <span class="v-num">01</span>
+          <h3>Real over perfect</h3>
+          <p>Posed when it helps, candid when it counts. I'd take a genuine laugh over a flawless pose every time.</p>
+        </div>
+        <div class="value">
+          <span class="v-num">02</span>
+          <h3>Light first</h3>
+          <p>I plan sessions around the light, not the other way around. It's the difference between a snapshot and a frame you keep.</p>
+        </div>
+        <div class="value">
+          <span class="v-num">03</span>
+          <h3>Calm on the day</h3>
+          <p>No chaos, no barking directions. The calmer the day feels, the more honest the photographs are.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap reveal">
+      <span class="eyebrow" style="margin-bottom: var(--sp-5); display:inline-flex;">In the bag</span>
+      <p class="gear">
+        <span>Sony A7 IV</span> · <span>35mm f/1.4</span> · <span>85mm f/1.8</span> · <span>Portra-leaning color</span> · <span>natural light, mostly</span> · <span>a backup of the backup</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="text-align:center; border-top: 1px solid var(--line-2);">
+    <div class="wrap reveal">
+      <h2 class="section-title">Let's make something together.</h2>
+      <p class="lead muted" style="max-width: 44ch; margin: var(--sp-4) auto var(--sp-6);">Portraits, weddings, families — if you've got a moment worth keeping, I'm in.</p>
+      <a href="contact.html" class="btn">Get in touch <span class="arr">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand display">Nguyendow Images</div>
+        <p class="muted" style="max-width: 32ch; margin-top: var(--sp-3);">Cinematic portrait, wedding &amp; family photography. Based in California, available to travel.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <div class="footer-links">
+          <a href="gallery.html">Portfolio</a>
+          <a href="packages.html">Packages</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <div class="footer-links">
+          <a href="mailto:hello@nguyendowimages.com">hello@nguyendowimages.com</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          <a href="contact.html">Book a session</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Nguyendow Images</span>
+      <span>California, USA</span>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
