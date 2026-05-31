@@ -34,15 +34,12 @@
 
   /* ---- selected work ---- */
   .work-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--sp-5); margin-bottom: var(--sp-7); }
-  .work-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-4); }
-  .work-grid .frame { border-radius: 2px; }
-  .w-a { grid-column: span 7; aspect-ratio: 3/2; }
-  .w-b { grid-column: span 5; aspect-ratio: 4/5; }
-  .w-c { grid-column: span 5; aspect-ratio: 4/5; }
-  .w-d { grid-column: span 7; aspect-ratio: 3/2; }
+  .work-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); }
+  .work-grid .frame { border-radius: 2px; aspect-ratio: 2/3; }
   .w-cap { position: absolute; left: var(--sp-4); bottom: var(--sp-4); z-index: 3; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.18em; text-transform: uppercase; color: var(--text); opacity: 0; transform: translateY(8px); transition: opacity .4s var(--ease), transform .4s var(--ease); }
   .frame:hover .w-cap { opacity: 1; transform: none; }
-  @media (max-width: 720px){ .w-a, .w-b, .w-c, .w-d { grid-column: span 12; } }
+  @media (max-width: 860px){ .work-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px){ .work-grid { grid-template-columns: 1fr; } }
 
   /* ---- services ---- */
   .services { border-top: 1px solid var(--line-2); }
@@ -83,7 +80,7 @@
 
 <!-- HERO -->
 <header class="hero" data-screen-label="Landing — Hero">
-  <div class="hero-bg"><img src="images/hero.jpg" alt="" /></div>
+  <div class="hero-bg"><img src="images/portrait20.jpg" alt="" style="object-position: 50% 22%;" /></div>
   <div class="hero-inner">
     <span class="eyebrow">Portraits · Weddings · Families — California</span>
     <h1 class="display">Frames worth <em>keeping.</em></h1>
@@ -115,10 +112,10 @@
       <a href="gallery.html" class="btn ghost">Full portfolio <span class="arr">→</span></a>
     </div>
     <div class="work-grid reveal">
-      <a href="gallery.html" class="frame w-a zoom"><img src="images/g2.jpg" alt="Wedding photograph" /><span class="w-cap">Wedding · Sonoma</span></a>
-      <a href="gallery.html" class="frame w-b zoom"><img src="images/g1.jpg" alt="Portrait photograph" /><span class="w-cap">Portrait · Studio</span></a>
-      <a href="gallery.html" class="frame w-c zoom"><img src="images/g4.jpg" alt="Couple photograph" /><span class="w-cap">Couple · Big Sur</span></a>
-      <a href="gallery.html" class="frame w-d zoom"><img src="images/g8.jpg" alt="Wedding photograph" /><span class="w-cap">Wedding · Napa</span></a>
+      <a href="gallery.html" class="frame zoom"><img src="images/portrait16.jpg" alt="Portrait photograph" /><span class="w-cap">Portrait · Mt. Fuji</span></a>
+      <a href="gallery.html" class="frame zoom"><img src="images/porrrait17.jpg" alt="Couple photograph" /><span class="w-cap">Couple · Cherry Blossoms</span></a>
+      <a href="gallery.html" class="frame zoom"><img src="images/portrait6.jpg" alt="Wedding photograph" /><span class="w-cap">Wedding · City Hall</span></a>
+      <a href="gallery.html" class="frame zoom"><img src="images/portrait13.jpg" alt="Portrait photograph" /><span class="w-cap">Portrait · Blossom Season</span></a>
     </div>
   </div>
 </section>
@@ -150,7 +147,7 @@
 <!-- ABOUT TEASER -->
 <section class="section">
   <div class="wrap about-teaser">
-    <div class="frame zoom reveal"><img src="images/about.jpg" alt="The photographer" /></div>
+    <div class="frame zoom reveal"><img src="images/aboutme.jpg" alt="The photographer" /></div>
     <div class="reveal">
       <span class="eyebrow">Behind the lens</span>
       <h2 class="section-title" style="margin: var(--sp-4) 0 var(--sp-5);">Hi, I'm the photographer behind Nguyendow Images.</h2>
