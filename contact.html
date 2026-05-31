@@ -37,6 +37,9 @@
   .field.error .err { display: block; }
   .form-actions { display: flex; align-items: center; gap: var(--sp-5); flex-wrap: wrap; }
   .form-note { font-family: var(--mono); font-size: var(--fs-xs); color: var(--text-3); }
+  .form-error { font-family: var(--mono); font-size: var(--fs-xs); color: var(--accent); display: none; }
+  .form-error.show { display: block; }
+  .btn[disabled] { opacity: .6; cursor: progress; }
 
   .success {
     display: none; flex-direction: column; align-items: flex-start; gap: var(--sp-4);
@@ -83,7 +86,7 @@
 
       <!-- FORM -->
       <div>
-        <form class="form" id="bookingForm" novalidate>
+        <form class="form" id="bookingForm" action="https://formspree.io/f/xkoeaerd" method="POST" novalidate>
           <div class="row">
             <div class="field">
               <label for="name">Name <span class="req">*</span></label>
@@ -100,7 +103,7 @@
           <div class="row">
             <div class="field">
               <label for="type">Session type</label>
-              <select id="type" name="type">
+              <select id="type" name="session_type">
                 <option>Portrait / Headshots</option>
                 <option>Family / Couples</option>
                 <option>Wedding</option>
@@ -110,7 +113,7 @@
             </div>
             <div class="field">
               <label for="date">Preferred date</label>
-              <input type="date" id="date" name="date" />
+              <input type="date" id="date" name="preferred_date" />
             </div>
           </div>
 
@@ -120,10 +123,14 @@
             <span class="err">A few words about your shoot, please.</span>
           </div>
 
+          <!-- lets Formspree set a useful email subject line -->
+          <input type="hidden" name="_subject" value="New booking request — Nguyendow Images" />
+
           <div class="form-actions">
-            <button type="submit" class="btn">Send request <span class="arr">→</span></button>
+            <button type="submit" class="btn" id="submitBtn">Send request <span class="arr">→</span></button>
             <span class="form-note">No spam I promise. just a reply from me.</span>
           </div>
+          <span class="form-error" id="formError">Something went wrong sending your message. Please email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="79111c15151639171e0c001c171d160e1014181e1c0a571a1614">[email&#160;protected]</a> instead.</span>
         </form>
 
         <!-- success state -->
@@ -139,7 +146,7 @@
       <aside class="side">
         <div class="block" style="border-top:0; padding-top:0;">
           <h4>Email</h4>
-          <a href="mailto:hello@nguyendowimages.com">hello@nguyendowimages.com</a>
+          <a href="/cdn-cgi/l/email-protection#49212c25252609272e3c302c272d263e2024282e2c3a672a2624"><span class="__cf_email__" data-cfemail="1b737e7777745b757c6e627e757f746c72767a7c7e6835787476">[email&#160;protected]</span></a>
         </div>
         <div class="block">
           <h4>Social</h4>
@@ -179,7 +186,7 @@
       <div>
         <h4>Connect</h4>
         <div class="footer-links">
-          <a href="mailto:hello@nguyendowimages.com">hello@nguyendowimages.com</a>
+          <a href="/cdn-cgi/l/email-protection#5c34393030331c323b2925393238332b35313d3b392f723f3331"><span class="__cf_email__" data-cfemail="8ae2efe6e6e5cae4edfff3efe4eee5fde3e7ebedeff9a4e9e5e7">[email&#160;protected]</span></a>
           <a href="https://www.instagram.com/nguyendowimages/" target="_blank" rel="noopener">Instagram</a>
           <a href="contact.html">Book a session</a>
         </div>
@@ -192,18 +199,20 @@
   </div>
 </footer>
 
-<script src="site.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="site.js"></script>
 <script>
   /* ---------------------------------------------------------------
-     Client-side validation + success state.
-     This is a static demo handler. To actually receive emails on
-     GitHub Pages, point the form at a service like Formspree:
-       <form action="https://formspree.io/f/XXXX" method="POST">
-     and remove the e.preventDefault() below.
+     Validation + Formspree submission (AJAX).
+     Submissions are sent to the Formspree endpoint in the form's
+     action attribute, which forwards them to the email registered
+     on that Formspree form. Submitting via fetch keeps the user on
+     the page and shows the in-page success state.
   ---------------------------------------------------------------- */
   var form = document.getElementById('bookingForm');
   var success = document.getElementById('success');
   var successMsg = document.getElementById('successMsg');
+  var submitBtn = document.getElementById('submitBtn');
+  var formError = document.getElementById('formError');
 
   function setError(id, on) {
     document.getElementById(id).closest('.field').classList.toggle('error', on);
@@ -211,6 +220,8 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    formError.classList.remove('show');
+
     var name = document.getElementById('name').value.trim();
     var email = document.getElementById('email').value.trim();
     var message = document.getElementById('message').value.trim();
@@ -226,13 +237,29 @@
     }
 
     var type = document.getElementById('type').value;
-    successMsg.textContent = 'I\u2019ve got your ' + type.toLowerCase() +
-      ' request, ' + name.split(' ')[0] + ' \u2014 I\u2019ll be in touch within two days. Keep an eye on your inbox.';
+    submitBtn.disabled = true;
+    var btnLabel = submitBtn.innerHTML;
+    submitBtn.textContent = 'Sending…';
 
-    form.style.display = 'none';
-    success.classList.add('show');
-    success.scrollIntoView ? null : null; // avoid scrollIntoView per guidelines
-    window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 140, behavior: 'smooth' });
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function (res) {
+      if (res.ok) {
+        successMsg.textContent = 'I\u2019ve got your ' + type.toLowerCase() +
+          ' request, ' + name.split(' ')[0] + ' \u2014 I\u2019ll be in touch within two days. Keep an eye on your inbox.';
+        form.style.display = 'none';
+        success.classList.add('show');
+        window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 140, behavior: 'smooth' });
+      } else {
+        throw new Error('Bad response');
+      }
+    }).catch(function () {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = btnLabel;
+      formError.classList.add('show');
+    });
   });
 
   // clear error as the user types
